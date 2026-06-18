@@ -75,7 +75,7 @@ The entry page acts as the central orchestrator, passing telemetry states betwee
   * Used by [Footer.tsx](file:///c:/Users/User/Documents/Projects/Fault_detection/frontend/src/components/Footer.tsx) to resolve social media destinations dynamically.
 * **API Client**: [api.ts](file:///c:/Users/User/Documents/Projects/Fault_detection/frontend/src/lib/api.ts)
   * Establishes TypeScript interfaces mapping directly to FastAPI request and response payloads.
-  * Dispatches requests to `http://127.0.0.1:8000/api/fault/predict` using Axios.
+  * Dispatches requests dynamically to the backend API endpoint (resolving `process.env.NEXT_PUBLIC_API_URL` with a fallback to `http://localhost:8000/api/fault/predict`) using Axios.
   * Catch-blocks wrap server connections: if the backend is down, it returns a clean fallback payload outlining a connectivity error.
 
 ---
