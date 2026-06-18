@@ -11,7 +11,7 @@ export function Hero() {
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-3xl opacity-50"></div>
       </div>
 
-      <div className="container px-4 md:px-6 relative z-10 text-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center w-full">
         <div className="flex flex-col items-center space-y-8">
           <div className="space-y-4">
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl/none bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">

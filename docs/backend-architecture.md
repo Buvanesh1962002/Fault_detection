@@ -1,6 +1,6 @@
 # ⚙️ Backend Architecture Guide
 
-This document provides a comprehensive technical overview of the backend service powering the **FaultDetect AI** platform.
+This document provides a comprehensive technical overview of the backend service powering the **Scrutor** platform.
 
 ---
 
