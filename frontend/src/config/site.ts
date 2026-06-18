@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "FaultDetect AI",
+  name: "Scrutor",
   description: "AI-Powered Predictive Maintenance and Fault Detection",
   links: {
     github: "https://github.com", // TODO: Replace with your actual GitHub URL

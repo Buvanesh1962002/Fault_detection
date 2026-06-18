@@ -1,6 +1,6 @@
 # 💻 Frontend Architecture Guide
 
-This document outlines the frontend client application structure, user interface design decisions, state management, and component architecture for the **FaultDetect AI** dashboard.
+This document outlines the frontend client application structure, user interface design decisions, state management, and component architecture for the **Scrutor** dashboard.
 
 ---
 

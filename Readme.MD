@@ -1,8 +1,8 @@
-# 🔍 FaultDetect AI
+# 🔍 Scrutor
 
 > **AI-Powered Predictive Maintenance and Real-Time Fault Detection**
 
-FaultDetect AI is a full-stack, state-of-the-art predictive maintenance application designed to monitor industrial machinery health and detect system anomalies. By leveraging a machine learning classifier on the backend and a premium, responsive user interface on the frontend, operators can input live operational telemetry parameters and receive instant fault diagnostics and actionable maintenance recommendations.
+Scrutor is a full-stack, state-of-the-art predictive maintenance application designed to monitor industrial machinery health and detect system anomalies. By leveraging a machine learning classifier on the backend and a premium, responsive user interface on the frontend, operators can input live operational telemetry parameters and receive instant fault diagnostics and actionable maintenance recommendations.
 
 ---
 
