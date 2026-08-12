@@ -18,34 +18,41 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ActivitySquare, Zap, Thermometer, Wind, Droplets, RotateCcw } from "lucide-react";
 
 const formSchema = z.object({
-  voltage: z.coerce
-    .number({ required_error: "Voltage is required" })
-    .min(180, "Voltage must be between 180 and 260 V")
-    .max(260, "Voltage must be between 180 and 260 V"),
-  current: z.coerce
-    .number({ required_error: "Current is required" })
-    .min(0, "Current must be between 0 and 30 A")
-    .max(30, "Current must be between 0 and 30 A"),
-  motor_speed: z.coerce
-    .number({ required_error: "Motor Speed is required" })
-    .min(0, "Motor Speed must be between 0 and 3000 RPM")
-    .max(3000, "Motor Speed must be between 0 and 3000 RPM"),
-  temperature: z.coerce
-    .number({ required_error: "Temperature is required" })
-    .min(0, "Temperature must be between 0 and 120 °C")
-    .max(120, "Temperature must be between 0 and 120 °C"),
-  ambient_temperature: z.coerce
-    .number({ required_error: "Ambient Temp is required" })
-    .min(-10, "Ambient Temp must be between -10 and 60 °C")
-    .max(60, "Ambient Temp must be between -10 and 60 °C"),
-  vibration: z.coerce
-    .number({ required_error: "Vibration is required" })
-    .min(0, "Vibration must be between 0 and 5 g")
-    .max(5, "Vibration must be between 0 and 5 g"),
-  humidity: z.coerce
-    .number({ required_error: "Humidity is required" })
-    .min(0, "Humidity must be between 0 and 100 %")
-    .max(100, "Humidity must be between 0 and 100 %"),
+  voltage: z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? NaN : Number(val)))
+    .refine((val) => !isNaN(val), { message: "Please enter a valid Voltage reading" })
+    .refine((val) => val >= 180 && val <= 260, { message: "Voltage must be in valid range (180 - 260 V)" }),
+  current: z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? NaN : Number(val)))
+    .refine((val) => !isNaN(val), { message: "Please enter a valid Current reading" })
+    .refine((val) => val >= 0 && val <= 30, { message: "Current must be in valid range (0 - 30 A)" }),
+  motor_speed: z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? NaN : Number(val)))
+    .refine((val) => !isNaN(val), { message: "Please enter a valid Motor Speed reading" })
+    .refine((val) => val >= 0 && val <= 3000, { message: "Motor Speed must be in valid range (0 - 3000 RPM)" }),
+  temperature: z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? NaN : Number(val)))
+    .refine((val) => !isNaN(val), { message: "Please enter a valid Temperature reading" })
+    .refine((val) => val >= 0 && val <= 120, { message: "Motor Temperature must be in valid range (0 - 120 °C)" }),
+  ambient_temperature: z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? NaN : Number(val)))
+    .refine((val) => !isNaN(val), { message: "Please enter a valid Ambient Temperature reading" })
+    .refine((val) => val >= -10 && val <= 60, { message: "Ambient Temperature must be in valid range (-10 - 60 °C)" }),
+  vibration: z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? NaN : Number(val)))
+    .refine((val) => !isNaN(val), { message: "Please enter a valid Vibration reading" })
+    .refine((val) => val >= 0 && val <= 5, { message: "Vibration must be in valid range (0 - 5 g)" }),
+  humidity: z
+    .union([z.string(), z.number()])
+    .transform((val) => (val === "" ? NaN : Number(val)))
+    .refine((val) => !isNaN(val), { message: "Please enter a valid Humidity reading" })
+    .refine((val) => val >= 0 && val <= 100, { message: "Humidity must be in valid range (0 - 100 %)" }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -59,13 +66,13 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      voltage: 220,
-      current: 12,
-      motor_speed: 1500,
-      temperature: 50,
-      ambient_temperature: 25,
-      vibration: 0.1,
-      humidity: 45,
+      voltage: "" as unknown as number,
+      current: "" as unknown as number,
+      motor_speed: "" as unknown as number,
+      temperature: "" as unknown as number,
+      ambient_temperature: "" as unknown as number,
+      vibration: "" as unknown as number,
+      humidity: "" as unknown as number,
     },
   });
 
@@ -97,6 +104,7 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
                     <FormControl>
                       <Input type="number" step="any" placeholder="e.g. 220.5" className="bg-background/50 focus-visible:ring-primary/50 transition-all" {...field} />
                     </FormControl>
+                    <p className="text-[11px] text-muted-foreground/80">Range: 180 to 260 V</p>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -114,6 +122,7 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
                     <FormControl>
                       <Input type="number" step="any" placeholder="e.g. 15.2" className="bg-background/50 focus-visible:ring-primary/50 transition-all" {...field} />
                     </FormControl>
+                    <p className="text-[11px] text-muted-foreground/80">Range: 0 to 30 A</p>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -131,6 +140,7 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
                     <FormControl>
                       <Input type="number" step="any" placeholder="e.g. 1450" className="bg-background/50 focus-visible:ring-primary/50 transition-all" {...field} />
                     </FormControl>
+                    <p className="text-[11px] text-muted-foreground/80">Range: 0 to 3000 RPM</p>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -148,6 +158,7 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
                     <FormControl>
                       <Input type="number" step="any" placeholder="e.g. 0.05" className="bg-background/50 focus-visible:ring-primary/50 transition-all" {...field} />
                     </FormControl>
+                    <p className="text-[11px] text-muted-foreground/80">Range: 0 to 5 g</p>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -165,6 +176,7 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
                     <FormControl>
                       <Input type="number" step="any" placeholder="e.g. 65.0" className="bg-background/50 focus-visible:ring-primary/50 transition-all" {...field} />
                     </FormControl>
+                    <p className="text-[11px] text-muted-foreground/80">Range: 0 to 120 °C</p>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -182,6 +194,7 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
                     <FormControl>
                       <Input type="number" step="any" placeholder="e.g. 25.0" className="bg-background/50 focus-visible:ring-primary/50 transition-all" {...field} />
                     </FormControl>
+                    <p className="text-[11px] text-muted-foreground/80">Range: -10 to 60 °C</p>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -199,6 +212,7 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
                     <FormControl>
                       <Input type="number" step="any" placeholder="e.g. 45.5" className="bg-background/50 focus-visible:ring-primary/50 transition-all" {...field} />
                     </FormControl>
+                    <p className="text-[11px] text-muted-foreground/80">Range: 0 to 100 %</p>
                     <FormMessage />
                   </FormItem>
                 )}
