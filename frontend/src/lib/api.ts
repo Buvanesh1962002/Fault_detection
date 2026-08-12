@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const envUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const envUrl = process.env.NEXT_PUBLIC_API_URL || "https://fault-detection-backend.onrender.com";
 const API_BASE_URL = envUrl.endsWith("/api") ? envUrl : `${envUrl.replace(/\/$/, "")}/api`;
 
 export interface PredictionRequest {
