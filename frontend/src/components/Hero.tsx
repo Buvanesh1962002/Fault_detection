@@ -21,18 +21,13 @@ export function Hero() {
               Detect faults before they cause downtime. Enter your machine&apos;s telemetry data to get instant, AI-driven health predictions and recommendations.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-md">
+          <div className="w-full max-w-sm space-y-2">
             <Link href="#predict" passHref>
               <Button size="lg" className="w-full sm:w-auto text-lg px-8 py-6 rounded-full shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300">
                 Start Prediction
                 <ArrowDownCircle className="ml-2 h-5 w-5 animate-bounce" />
               </Button>
             </Link>
-            <a href="/Scrutor_Fault_Detection_Report.pdf" download="Scrutor_Fault_Detection_Report.pdf" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto text-lg px-8 py-6 rounded-full border-primary/40 hover:bg-primary/10 transition-all duration-300">
-                Download PDF Report
-              </Button>
-            </a>
           </div>
         </div>
       </div>
