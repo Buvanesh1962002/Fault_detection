@@ -27,17 +27,17 @@ const formSchema = z.object({
     .union([z.string(), z.number()])
     .transform((val) => (val === "" ? NaN : Number(val)))
     .refine((val) => !isNaN(val), { message: "Please enter a valid Current reading" })
-    .refine((val) => val >= 0 && val <= 30, { message: "Current must be in valid range (0 - 30 A)" }),
+    .refine((val) => val >= 0.1 && val <= 30, { message: "Current must be in valid range (0.1 - 30 A)" }),
   motor_speed: z
     .union([z.string(), z.number()])
     .transform((val) => (val === "" ? NaN : Number(val)))
     .refine((val) => !isNaN(val), { message: "Please enter a valid Motor Speed reading" })
-    .refine((val) => val >= 0 && val <= 3000, { message: "Motor Speed must be in valid range (0 - 3000 RPM)" }),
+    .refine((val) => val >= 10 && val <= 3000, { message: "Motor Speed must be in valid range (10 - 3000 RPM)" }),
   temperature: z
     .union([z.string(), z.number()])
     .transform((val) => (val === "" ? NaN : Number(val)))
     .refine((val) => !isNaN(val), { message: "Please enter a valid Temperature reading" })
-    .refine((val) => val >= 0 && val <= 120, { message: "Motor Temperature must be in valid range (0 - 120 °C)" }),
+    .refine((val) => val >= 1 && val <= 120, { message: "Motor Temperature must be in valid range (1 - 120 °C)" }),
   ambient_temperature: z
     .union([z.string(), z.number()])
     .transform((val) => (val === "" ? NaN : Number(val)))
@@ -47,12 +47,12 @@ const formSchema = z.object({
     .union([z.string(), z.number()])
     .transform((val) => (val === "" ? NaN : Number(val)))
     .refine((val) => !isNaN(val), { message: "Please enter a valid Vibration reading" })
-    .refine((val) => val >= 0 && val <= 5, { message: "Vibration must be in valid range (0 - 5 g)" }),
+    .refine((val) => val >= 0.01 && val <= 5, { message: "Vibration must be in valid range (0.01 - 5 g)" }),
   humidity: z
     .union([z.string(), z.number()])
     .transform((val) => (val === "" ? NaN : Number(val)))
     .refine((val) => !isNaN(val), { message: "Please enter a valid Humidity reading" })
-    .refine((val) => val >= 0 && val <= 100, { message: "Humidity must be in valid range (0 - 100 %)" }),
+    .refine((val) => val >= 1 && val <= 100, { message: "Humidity must be in valid range (1 - 100 %)" }),
 });
 
 type FormValues = z.infer<typeof formSchema>;

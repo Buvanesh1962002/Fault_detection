@@ -8,12 +8,12 @@ router = APIRouter(prefix="/api/fault")
 # Physical min/max operational bounds for converting real-world values into [0.0, 1.0] range
 BOUNDS = {
     "voltage_v":       {"min": 180.0, "max": 260.0},
-    "current_a":       {"min": 0.0,   "max": 30.0},
-    "motor_speed_rpm": {"min": 0.0,   "max": 3000.0},
-    "temperature_c":   {"min": 0.0,   "max": 120.0},
-    "vibration_g":     {"min": 0.0,   "max": 5.0},
+    "current_a":       {"min": 0.1,   "max": 30.0},
+    "motor_speed_rpm": {"min": 10.0,  "max": 3000.0},
+    "temperature_c":   {"min": 1.0,   "max": 120.0},
+    "vibration_g":     {"min": 0.01,  "max": 5.0},
     "ambient_temp_c":  {"min": -10.0, "max": 60.0},
-    "humidity":        {"min": 0.0,   "max": 100.0}
+    "humidity":        {"min": 1.0,   "max": 100.0}
 }
 
 @router.post("/predict")
@@ -48,12 +48,12 @@ async def predict(request: PredictionRequest, http_request: Request):
         errors = []
         labels = {
             "voltage_v": "Voltage (180 - 260 V)",
-            "current_a": "Current (0 - 30 A)",
-            "motor_speed_rpm": "Motor Speed (0 - 3000 RPM)",
-            "temperature_c": "Motor Temperature (0 - 120 °C)",
-            "vibration_g": "Vibration (0 - 5 g)",
+            "current_a": "Current (0.1 - 30 A)",
+            "motor_speed_rpm": "Motor Speed (10 - 3000 RPM)",
+            "temperature_c": "Motor Temperature (1 - 120 °C)",
+            "vibration_g": "Vibration (0.01 - 5 g)",
             "ambient_temp_c": "Ambient Temperature (-10 - 60 °C)",
-            "humidity": "Humidity (0 - 100 %)"
+            "humidity": "Humidity (1 - 100 %)"
         }
 
         normalized_inputs = {}
