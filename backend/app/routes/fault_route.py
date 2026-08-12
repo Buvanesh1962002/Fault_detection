@@ -37,21 +37,43 @@ async def predict(request: PredictionRequest, http_request: Request):
         "humidity": request.humidity
     }
 
-    # Detect if user entered real-world values (e.g. voltage > 1.5) or pre-scaled values [0, 1]
-    is_real_world = any(raw_inputs[col] > 1.5 for col in raw_inputs)
+    # Detect if user entered pre-scaled values [0.0, 1.0] across ALL inputs
+    is_prescaled = all(0.0 <= raw_inputs[col] <= 1.0 for col in raw_inputs)
 
-    if is_real_world:
-        # Convert real-world values into normalized [0.0, 1.0] range
+    if is_prescaled:
+        # User entered pre-scaled 0.0 - 1.0 values
+        input_df = pd.DataFrame([raw_inputs])
+    else:
+        # Validate each real-world input reading against physical operational bounds
+        errors = []
+        labels = {
+            "voltage_v": "Voltage (180 - 260 V)",
+            "current_a": "Current (0 - 30 A)",
+            "motor_speed_rpm": "Motor Speed (0 - 3000 RPM)",
+            "temperature_c": "Motor Temperature (0 - 120 °C)",
+            "vibration_g": "Vibration (0 - 5 g)",
+            "ambient_temp_c": "Ambient Temperature (-10 - 60 °C)",
+            "humidity": "Humidity (0 - 100 %)"
+        }
+
         normalized_inputs = {}
         for col, val in raw_inputs.items():
             b = BOUNDS[col]
-            # Clip between min and max bounds to prevent out-of-range scaling
-            clipped_val = max(b["min"], min(b["max"], val))
-            normalized_inputs[col] = (clipped_val - b["min"]) / (b["max"] - b["min"])
+            if val < b["min"] or val > b["max"]:
+                errors.append(f"{labels[col]} received invalid value {val} (allowed range: {b['min']} to {b['max']}).")
+            else:
+                normalized_inputs[col] = (val - b["min"]) / (b["max"] - b["min"])
+
+        # If any single reading input is out of range, reject request and return error message
+        if errors:
+            return {
+                "error": "Invalid Sensor Reading: " + " | ".join(errors),
+                "predicted_fault": "Unknown",
+                "recommendation": "Correct out-of-range sensor inputs before running analysis.",
+                "confidence": None
+            }
+
         input_df = pd.DataFrame([normalized_inputs])
-    else:
-        # User already entered pre-scaled 0.0 - 1.0 values
-        input_df = pd.DataFrame([raw_inputs])
 
     # Scale using loaded StandardScaler instance if available
     if scaler:

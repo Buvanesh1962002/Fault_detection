@@ -18,13 +18,34 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ActivitySquare, Zap, Thermometer, Wind, Droplets, RotateCcw } from "lucide-react";
 
 const formSchema = z.object({
-  voltage: z.coerce.number({ required_error: "Voltage is required" }),
-  current: z.coerce.number({ required_error: "Current is required" }),
-  motor_speed: z.coerce.number({ required_error: "Motor Speed is required" }),
-  temperature: z.coerce.number({ required_error: "Temperature is required" }),
-  ambient_temperature: z.coerce.number({ required_error: "Ambient Temp is required" }),
-  vibration: z.coerce.number({ required_error: "Vibration is required" }),
-  humidity: z.coerce.number({ required_error: "Humidity is required" }).min(0).max(100),
+  voltage: z.coerce
+    .number({ required_error: "Voltage is required" })
+    .min(180, "Voltage must be between 180 and 260 V")
+    .max(260, "Voltage must be between 180 and 260 V"),
+  current: z.coerce
+    .number({ required_error: "Current is required" })
+    .min(0, "Current must be between 0 and 30 A")
+    .max(30, "Current must be between 0 and 30 A"),
+  motor_speed: z.coerce
+    .number({ required_error: "Motor Speed is required" })
+    .min(0, "Motor Speed must be between 0 and 3000 RPM")
+    .max(3000, "Motor Speed must be between 0 and 3000 RPM"),
+  temperature: z.coerce
+    .number({ required_error: "Temperature is required" })
+    .min(0, "Temperature must be between 0 and 120 °C")
+    .max(120, "Temperature must be between 0 and 120 °C"),
+  ambient_temperature: z.coerce
+    .number({ required_error: "Ambient Temp is required" })
+    .min(-10, "Ambient Temp must be between -10 and 60 °C")
+    .max(60, "Ambient Temp must be between -10 and 60 °C"),
+  vibration: z.coerce
+    .number({ required_error: "Vibration is required" })
+    .min(0, "Vibration must be between 0 and 5 g")
+    .max(5, "Vibration must be between 0 and 5 g"),
+  humidity: z.coerce
+    .number({ required_error: "Humidity is required" })
+    .min(0, "Humidity must be between 0 and 100 %")
+    .max(100, "Humidity must be between 0 and 100 %"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -38,13 +59,13 @@ export function PredictionForm({ onSubmit, isLoading }: PredictionFormProps) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      voltage: 0,
-      current: 0,
-      motor_speed: 0,
-      temperature: 0,
-      ambient_temperature: 0,
-      vibration: 0,
-      humidity: 0,
+      voltage: 220,
+      current: 12,
+      motor_speed: 1500,
+      temperature: 50,
+      ambient_temperature: 25,
+      vibration: 0.1,
+      humidity: 45,
     },
   });
 
