@@ -4,5 +4,6 @@ pydantic
 scikit-learn
 pandas
 python-multipart
+httpx
 
 
