@@ -7,6 +7,20 @@ interface PredictionResultProps {
   isLoading: boolean;
 }
 
+const detailedRecommendations: Record<string, string> = {
+  "Normal": "• System parameters are operating within safe nominal limits.\n• Continue standard monitoring routines and maintain regular inspection schedules.\n• No immediate mechanical intervention required.",
+  "Warning": "• Minor telemetry anomalies detected across operating features.\n• Schedule routine maintenance inspection soon to prevent potential component degradation.\n• Check motor temperature and vibration logs closely over the next 24 hours.",
+  "Worst Condition": "• Severe operating deviations detected nearing component stress limits.\n• Immediate physical inspection and corrective maintenance required to avoid structural failure.\n• Reduce operating load immediately and inspect cooling/lubrication systems.",
+  "Critical": "• Critical fault thresholds exceeded with immediate risk of motor burnout or mechanical failure.\n• Initiate emergency system shutdown immediately and perform complete diagnostic troubleshooting.\n• Do not restart machinery until hardware safety inspection is cleared by a certified engineer."
+};
+
+function getFormattedRecommendation(predictedFault: string, rawRecommendation?: string): string {
+  if (rawRecommendation && rawRecommendation.includes('\n') && rawRecommendation.length > 50) {
+    return rawRecommendation;
+  }
+  return detailedRecommendations[predictedFault] || rawRecommendation || "Perform thorough system inspection and review sensor logs.";
+}
+
 export function PredictionResult({ result, isLoading }: PredictionResultProps) {
   if (isLoading) {
     return (
@@ -78,6 +92,8 @@ export function PredictionResult({ result, isLoading }: PredictionResultProps) {
       break;
   }
 
+  const recommendationText = getFormattedRecommendation(result.predicted_fault, result.recommendation);
+
   return (
     <Card className={`w-full h-full overflow-hidden transition-all duration-500 shadow-md ${borderColor}`}>
       <CardHeader className={`${bgColor} pb-8`}>
@@ -110,8 +126,8 @@ export function PredictionResult({ result, isLoading }: PredictionResultProps) {
               Actionable Recommendation
             </h4>
             <div className="p-4 rounded-lg bg-secondary/50 border shadow-sm">
-              <p className="text-lg font-medium leading-relaxed">
-                {result.recommendation}
+              <p className="text-base font-medium leading-relaxed whitespace-pre-line text-foreground/90">
+                {recommendationText}
               </p>
             </div>
           </div>
