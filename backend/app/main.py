@@ -4,6 +4,7 @@ import pickle
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.fault_route import router as fault_router
+from app.routes.vehicles_route import router as vehicles_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -48,6 +49,7 @@ app = FastAPI(lifespan=lifespan)
 
 # Register routes
 app.include_router(fault_router)
+app.include_router(vehicles_router)
 
 @app.get("/")
 async def root():
