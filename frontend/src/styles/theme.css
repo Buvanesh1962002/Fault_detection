@@ -1,0 +1,83 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+ * SCRUTOR EV — Design System Color Tokens
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * Controls the entire color palette. Edit OKLCH values to customize.
+ * OKLCH: oklch(Lightness Chroma Hue)
+ *   Lightness: 0 (black) → 1 (white)
+ *   Chroma: 0 (gray) → 0.4 (vivid)
+ *   Hue: 0-360° color wheel
+ *
+ * The .dark class is toggled on <html> by ThemeContext.tsx
+ * ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── LIGHT MODE ────────────────────────────────────────────────────────── */
+:root {
+  --background: oklch(0.985 0.002 247);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.55 0.22 262);
+  --primary-foreground: oklch(0.98 0.005 262);
+  --secondary: oklch(0.95 0.01 262);
+  --secondary-foreground: oklch(0.25 0.05 262);
+  --muted: oklch(0.96 0.005 262);
+  --muted-foreground: oklch(0.50 0.02 262);
+  --accent: oklch(0.94 0.015 262);
+  --accent-foreground: oklch(0.20 0.03 262);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.90 0.01 262);
+  --input: oklch(0.90 0.01 262);
+  --ring: oklch(0.55 0.22 262);
+  --chart-1: oklch(0.55 0.22 262);
+  --chart-2: oklch(0.65 0.19 200);
+  --chart-3: oklch(0.60 0.17 150);
+  --chart-4: oklch(0.55 0.15 100);
+  --chart-5: oklch(0.50 0.20 330);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0.002 247);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.55 0.22 262);
+  --sidebar-primary-foreground: oklch(0.98 0.005 262);
+  --sidebar-accent: oklch(0.94 0.015 262);
+  --sidebar-accent-foreground: oklch(0.20 0.03 262);
+  --sidebar-border: oklch(0.90 0.01 262);
+  --sidebar-ring: oklch(0.55 0.22 262);
+}
+
+/* ─── DARK MODE ─────────────────────────────────────────────────────────── */
+.dark {
+  --background: oklch(0.13 0.015 265);
+  --foreground: oklch(0.96 0.005 262);
+  --card: oklch(0.18 0.02 265);
+  --card-foreground: oklch(0.96 0.005 262);
+  --popover: oklch(0.18 0.02 265);
+  --popover-foreground: oklch(0.96 0.005 262);
+  --primary: oklch(0.72 0.19 262);
+  --primary-foreground: oklch(0.13 0.03 262);
+  --secondary: oklch(0.24 0.025 265);
+  --secondary-foreground: oklch(0.96 0.005 262);
+  --muted: oklch(0.22 0.02 265);
+  --muted-foreground: oklch(0.65 0.02 262);
+  --accent: oklch(0.24 0.03 265);
+  --accent-foreground: oklch(0.96 0.005 262);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.72 0.19 262);
+  --chart-1: oklch(0.72 0.19 262);
+  --chart-2: oklch(0.65 0.19 200);
+  --chart-3: oklch(0.60 0.17 150);
+  --chart-4: oklch(0.55 0.15 100);
+  --chart-5: oklch(0.50 0.20 330);
+  --sidebar: oklch(0.16 0.018 265);
+  --sidebar-foreground: oklch(0.96 0.005 262);
+  --sidebar-primary: oklch(0.72 0.19 262);
+  --sidebar-primary-foreground: oklch(0.13 0.03 262);
+  --sidebar-accent: oklch(0.24 0.03 265);
+  --sidebar-accent-foreground: oklch(0.96 0.005 262);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.72 0.19 262);
+}
